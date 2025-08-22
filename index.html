@@ -45,7 +45,7 @@
       display: block;
       width: 50%;
       margin: 10px 0;
-      font-size: 30px;
+      font-size: 25px;
     }
 
     textarea {
@@ -257,7 +257,12 @@
 
     <label id="labelDays">Nombre de jours ouvrables:</label>
     <input type="number" id="workingDays" min="1" max="90" value="3">
-	<label><input type="checkbox" id="includeWeekends">عدم احتساب الجمعة والسبت؟</label>
+    
+	<label style="display: inline-flex;gap: 1px;cursor: pointer;flex-direction: row;flex-wrap: nowrap;align-content: stretch;justify-content: center;align-items: stretch;">
+  <input type="checkbox" id="includeWeekends">
+  عدم إحتساب الجمعة والسبت
+</label>
+
 
 
     <div class="warning" id="warningText">💡 Valeur recommandée par la banque: 3</div>
