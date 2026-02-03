@@ -1,477 +1,254 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Tableau de Voyage</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .logo-container {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    
-      input#workingDays {
-      transition: background-color 0.3s ease;
-    }
-
-
-    .logo {
-      max-width: 180px;
-      height: auto;
-      display: inline-block;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    label, input {
-      display: block;
-      width: 50%;
-      margin: 10px 0;
-      font-size: 25px;
-    }
-
-    textarea {
-      width: 100%;
-      font-size: 16px;
-      margin: 10px 0;
-      padding: 30px 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      text-align: center;
-      box-sizing: border-box;
-      font-family: 'Tajawal', 'Arial', sans-serif;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-	
-	#resultTable thead th {
-		background-color: #fff9c4; /* أصفر فاتح */
-		color: #000;               /* كتابة سوداء */
-	}
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 30px;
-    }
-
-    button:hover {
-      background-color: #0051a3;
-    }
-
-    .lang-switch {
-      text-align: right;
-      margin-bottom: 10px;
-    }
-
-    .warning {
-      background-color: #fff3cd;
-      color: #856404;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-    }
-
-    .button-row {
-     display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 10px;
-    align-content: center;
-    align-items: center;
-    }
-
-    @media print {
-      @page {
-        size: A4 landscape;
-        margin: 10mm;
-      }
-
-      body {
-        background: white;
-        color: black;
-        margin: 0;
-        padding: 0;
-      }
-
-      .container {
-        box-shadow: none;
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-        max-width: 100%;
-      }
-
-      .lang-switch,
-      .warning,
-      .button-row,
-      input,
-      label,
-      #printNote {
-        display: none !important;
-      }
-
-      #customNote {
-        display: block !important;
-        border: none;
-        font-size: 30px;
-        width: 100%;
-        height: auto;
-        resize: none;
-        text-align: center;
-        padding: 30px 10px;
-      }
-
-      .logo-container {
-        display: block !important;
-        text-align: center;
-        margin-bottom: 10px;
-      }
-
-      .logo {
-        max-width: 150px;
-        height: auto;
-      }
-
-      table {
-        page-break-inside: avoid;
-      }
-
-      h2 {
-        margin: 0 0 10px 0;
-        text-align: center;
-      }
-    }
-
-@media print {
-  .logo-container,
-  .logo,
-  #customNote,
-  #resultTable {
-    page-break-before: avoid;
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-  
- /* إخفاء عمود التحميل أو الزر عند الطباعة */
-  .download-column,
-  .download-button {
-    display: none !important;
-  }
-
-  /* مسافة 0.8 سنتيمتر بين Remarques والجدول */
-  #customNote {
-    margin-bottom: 8.8cm !important;
-    padding-bottom: 0 !important;
-  }
-
-  #resultTable {
-    margin-top: 0 !important;
-  }
-
-  .logo {
-    max-height: 100px !important;
-    height: auto !important;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .logo-container {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  #customNote {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  #resultTable {
-    margin-top: 0 !important;
-  }
-}
-
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نظام إدارة الفريق</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="container">
-    <div class="lang-switch">
-      <button onclick="switchLanguage()">🇫🇷 / 🇸🇦</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">👥 نظام إدارة الفريق</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <button class="nav-btn active" data-tab="dashboard">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">لوحة التحكم</span>
+        </button>
+        <button class="nav-btn" data-tab="personnel">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">الأفراد</span>
+        </button>
+        <button class="nav-btn" data-tab="leaves">
+            <span class="nav-icon">📅</span>
+            <span class="nav-text">الإجازات</span>
+        </button>
+        <button class="nav-btn" data-tab="settings">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-text">الإعدادات</span>
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Dashboard Tab -->
+        <section class="tab active" id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card total">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-label">إجمالي الأفراد</div>
+                    </div>
+                </div>
+                <div class="stat-card active-stat">
+                    <div class="stat-icon">🟢</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statActive">0</div>
+                        <div class="stat-label">في الخدمة</div>
+                    </div>
+                </div>
+                <div class="stat-card leave">
+                    <div class="stat-icon">🟡</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statLeave">0</div>
+                        <div class="stat-label">في إجازة</div>
+                    </div>
+                </div>
+                <div class="stat-card absent">
+                    <div class="stat-icon">🟠</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statAbsent">0</div>
+                        <div class="stat-label">غياب</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">النشاط الأخير</div>
+            <div id="recentActivity" class="activity-list"></div>
+        </section>
+
+        <!-- Personnel Tab -->
+        <section class="tab" id="personnel">
+            <div class="tab-header">
+                <h2 class="tab-title">إدارة الأفراد</h2>
+                <button class="btn-add" id="addPersonBtn">
+                    <span>➕</span>
+                    <span>إضافة فرد</span>
+                </button>
+            </div>
+
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="ابحث بالاسم أو رقم الهاتف...">
+            </div>
+
+            <div class="filter-row">
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">الكل</option>
+                    <option value="active">في الخدمة</option>
+                    <option value="on-leave">في إجازة</option>
+                    <option value="absent">غياب</option>
+                    <option value="inactive">خارج الخدمة</option>
+                </select>
+                <select id="sortBy" class="filter-select">
+                    <option value="name">الاسم</option>
+                    <option value="date">التاريخ</option>
+                    <option value="status">الحالة</option>
+                </select>
+            </div>
+
+            <div id="personnelGrid" class="cards-grid"></div>
+        </section>
+
+        <!-- Leaves Tab -->
+        <section class="tab" id="leaves">
+            <div class="tab-header">
+                <h2 class="tab-title">الإجازات والغيابات</h2>
+                <button class="btn-add" id="addLeaveBtn">
+                    <span>➕</span>
+                    <span>تسجيل</span>
+                </button>
+            </div>
+
+            <div id="leavesGrid" class="cards-grid"></div>
+        </section>
+
+        <!-- Settings Tab -->
+        <section class="tab" id="settings">
+            <h2 class="tab-title">الإعدادات</h2>
+
+            <div class="settings-card">
+                <h3>إدارة البيانات</h3>
+                <button class="btn-setting" id="exportBtn">📥 تصدير البيانات</button>
+                <button class="btn-setting" id="importBtn">📤 استيراد البيانات</button>
+                <button class="btn-setting danger" id="clearBtn">🗑️ مسح جميع البيانات</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Person Modal -->
+    <div class="modal" id="personModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">إضافة فرد جديد</h3>
+                <button class="modal-close" id="closePersonModal">×</button>
+            </div>
+            <form id="personForm">
+                <input type="hidden" id="personId">
+
+                <div class="form-group">
+                    <label for="personName">الاسم الكامل *</label>
+                    <input type="text" id="personName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="personPhone">رقم الهاتف *</label>
+                    <input type="tel" id="personPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>الحالة *</label>
+                    <select id="personStatus" required>
+                        <option value="active">🟢 في الخدمة</option>
+                        <option value="on-leave">🟡 في إجازة</option>
+                        <option value="absent">🟠 غياب</option>
+                        <option value="inactive">🔴 خارج الخدمة</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>تاريخ الانضمام *</label>
+                    <input type="date" id="personJoinDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ملاحظات</label>
+                    <textarea id="personNotes" rows="3"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelPersonBtn">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-<center>
+    <!-- Leave Modal -->
+    <div class="modal" id="leaveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تسجيل إجازة/غياب</h3>
+                <button class="modal-close" id="closeLeaveModal">×</button>
+            </div>
+            <form id="leaveForm">
+                <input type="hidden" id="leaveId">
 
-    <div class="logo-container">
-      <img src="Logo_of_the_Bank_of_Algeria.png" alt="Logo" class="logo">
+                <div class="form-group">
+                    <label>الفرد *</label>
+                    <select id="leavePerson" required>
+                        <option value="">اختر الفرد</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>النوع *</label>
+                    <select id="leaveType" required>
+                        <option value="leave">إجازة</option>
+                        <option value="absent">غياب</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>من تاريخ *</label>
+                    <input type="date" id="leaveStartDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>إلى تاريخ *</label>
+                    <input type="date" id="leaveEndDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>السبب *</label>
+                    <input type="text" id="leaveReason" required>
+                </div>
+
+                <div class="form-group checkbox">
+                    <label>
+                        <input type="checkbox" id="leaveJustified">
+                        <span>مبرر</span>
+                    </label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelLeaveBtn">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
     </div>
-	
-	
-    <h2 id="title">Tableau de Paiement des Frais de Change</h2>
 
-    <label id="labelStart">Date de début:</label>
-    <input type="date" id="startDate">
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
-    <label id="labelEnd">Date de fin:</label>
-    <input type="date" id="endDate">
+    <input type="file" id="importFile" accept=".json" style="display: none;">
 
-    <label id="labelDays">Nombre de jours ouvrables:</label>
-    <input type="number" id="workingDays" min="1" max="90" value="3">
-    
-	<label style="display: inline-flex;gap: 1px;cursor: pointer;flex-direction: row;flex-wrap: nowrap;align-content: stretch;justify-content: center;align-items: stretch;">
-  <input type="checkbox" id="includeWeekends">
-  عدم إحتساب الجمعة والسبت
-</label>
-
-
-
-    <div class="warning" id="warningText">💡 Valeur recommandée par la banque: 3</div>
-
-    <div class="button-row">
-      <button onclick="generateTable()" id="btnGenerate">Générer</button>
-      <button onclick="clearTable()" id="btnClear">Vider</button>
-      <button onclick="printPage()" id="btnPrint">Imprimer</button>
-    </div>
-
-</center>
-
-    <label id="labelNote">Remarques:</label>
-    <textarea id="customNote" rows="3" placeholder="...اكتب هنا الملاحظات أو العنوان"></textarea>
-
-    <table id="resultTable">
-      <thead>
-        <tr>
-          <th>Date de paiement</th>
-          <th>Date de voyage 1</th>
-          <th>Date de voyage 2</th>
-          <th>Date de voyage 3</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <script>
-	
-    const labels = {
-      fr: {
-        title: "Tableau de Paiement des Frais de Change",
-        labelStart: "Date de début:",
-        labelEnd: "Date de fin:",
-        labelDays: "Nombre de jours ouvrables:",
-        labelNote: "Remarques:",
-        warning: "💡 Valeur recommandée par la banque: 3",
-        headers: ["Date de paiement", "Date de voyage 1", "Date de voyage 2", "Date de voyage 3"],
-        buttons: { generate: "Générer", clear: "Vider", print: "Imprimer" }
-      },
-      ar: {
-        title: "جدول لتسديد حق الصرف",
-        labelStart: "تاريخ البدء:",
-        labelEnd: "تاريخ الانتهاء:",
-        labelDays: "عدد أيام العمل:",
-        labelNote: "ملاحظات:",
-        warning: "💡 القيمة الموصى بها من البنك: 3",
-        headers: ["تاريخ الدفع", "تاريخ السفر 1", "تاريخ السفر 2", "تاريخ السفر 3"],
-        buttons: { generate: "توليد", clear: "تفريغ", print: "طباعة" }
-      }
-    };
-
-    let currentLang = 'fr';
-
-window.onload = function () {
-  const today = new Date();
-  const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-  const nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 2, 0);
-
-  const formatDate = (d) => d.toISOString().split('T')[0];
-
-  document.getElementById("startDate").value = formatDate(nextMonthStart);
-  document.getElementById("endDate").value = formatDate(nextMonthEnd);
-
-  // --- هنا كود تغيير اللون حسب القيمة ---
-  const workingDaysInput = document.getElementById("workingDays");
-
-  function updateWorkingDaysColor() {
-    if (parseInt(workingDaysInput.value) === 3) {
-      workingDaysInput.style.backgroundColor = "#c8e6c9"; // أخضر فاتح
-    } else {
-      workingDaysInput.style.backgroundColor = "#ffcdd2"; // أحمر فاتح
-    }
-  }
-
-  workingDaysInput.addEventListener("input", updateWorkingDaysColor);
-  updateWorkingDaysColor();
-};
-
-	
-    function switchLanguage() {
-      currentLang = currentLang === 'fr' ? 'ar' : 'fr';
-      document.getElementById("title").innerText = labels[currentLang].title;
-      document.getElementById("labelStart").innerText = labels[currentLang].labelStart;
-      document.getElementById("labelEnd").innerText = labels[currentLang].labelEnd;
-      document.getElementById("labelDays").innerText = labels[currentLang].labelDays;
-      document.getElementById("warningText").innerText = labels[currentLang].warning;
-      document.getElementById("labelNote").innerText = labels[currentLang].labelNote;
-
-      const headerCells = document.querySelectorAll("#resultTable thead tr th");
-      labels[currentLang].headers.forEach((text, i) => {
-        headerCells[i].innerText = text;
-      });
-
-      document.getElementById("btnGenerate").innerText = labels[currentLang].buttons.generate;
-      document.getElementById("btnClear").innerText = labels[currentLang].buttons.clear;
-      document.getElementById("btnPrint").innerText = labels[currentLang].buttons.print;
-
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.lang = currentLang;
-    }
-
-    function isWorkingDay(date) {
-      const day = date.getDay();
-      return day !== 5 && day !== 6;
-    }
-
-    function addWorkingDays(start, days) {
-      let result = new Date(start);
-      let added = 0;
-      while (added < days) {
-        result.setDate(result.getDate() + 1);
-        if (isWorkingDay(result)) {
-          added++;
-        }
-      }
-      return result;
-    }
-
-    function formatDateLocalized(date) {
-      if (currentLang === 'ar') {
-        const jours = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-        const mois = ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-        return `${jours[date.getDay()]}، ${date.getDate()} ${mois[date.getMonth()]} ${date.getFullYear()}`;
-      } else {
-        const jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-        const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-        return `${jours[date.getDay()]}, ${date.getDate()} ${mois[date.getMonth()]} ${date.getFullYear()}`;
-      }
-    }
-	
-	function isWeekend(day) {
-  return day === 5 || day === 6; // الجمعة = 5، السبت = 6
-}
-
-
-
-function addConditionalDays(start, totalDays, includeWeekends) {
-  let result = new Date(start);
-  let added = 0;
-  while (added < totalDays) {
-    result.setDate(result.getDate() + 1);
-    const day = result.getDay();
-    if (includeWeekends || (!isWeekend(day))) {
-      added++;
-    }
-  }
-  return result;
-}
-
-function generateTable() {
-  const start = new Date(document.getElementById("startDate").value);
-  const end = new Date(document.getElementById("endDate").value);
-  const days = parseInt(document.getElementById("workingDays").value);
-  const includeWeekends = document.getElementById("includeWeekends")?.checked;
-
-  const tbody = document.querySelector("#resultTable tbody");
-  tbody.innerHTML = "";
-
-  if (isNaN(start) || isNaN(end) || days < 1 || days > 90) {
-    alert(currentLang === 'fr' ? "Veuillez entrer des données valides." : "يرجى إدخال بيانات صالحة.");
-    return;
-  }
-
-  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    const current = new Date(d);
-    if (!isWorkingDay(current)) continue;
-
-    const voyage1 = addConditionalDays(current, days, includeWeekends);
-
-    const voyage2 = new Date(voyage1);
-    voyage2.setDate(voyage2.getDate() + 1);
-
-    const voyage3 = new Date(voyage2);
-    voyage3.setDate(voyage3.getDate() + 1);
-
-    const row = document.createElement("tr");
-    [current, voyage1, voyage2, voyage3].forEach(date => {
-      const td = document.createElement("td");
-      td.innerText = formatDateLocalized(date);
-      row.appendChild(td);
-    });
-
-    tbody.appendChild(row);
-  }
-}
-
-
-
-
-
-
-    function clearTable() {
-      document.querySelector("#resultTable tbody").innerHTML = "";
-    }
-
-    function printPage() {
-      if (document.querySelector("#resultTable tbody").children.length === 0) {
-        alert(currentLang === 'fr' ? "Aucun tableau à imprimer." : "لا يوجد جدول للطباعة.");
-        return;
-      }
-      alert(
-        currentLang === 'fr'
-          ? "ℹ️ Pour une impression propre, désactivez l’option 'En-têtes et pieds de page' dans la fenêtre d'impression."
-          : "ℹ️ لتفادي ظهور الرابط أسفل الورقة، قم بإلغاء خيار 'رؤوس وتذييلات الصفحة' من إعدادات الطابعة."
-      );
-      window.print();
-    }
-  </script>
+    <script src="app.js"></script>
 </body>
+
 </html>
