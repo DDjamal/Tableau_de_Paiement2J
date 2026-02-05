@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول الأنظمة العددية المتقدم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>محول الأرقام المتقدم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #e63946;
+            --card-bg: #ffffff;
+            --body-bg: #f5f7fb;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.12);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,387 +31,703 @@
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #f1f1f1;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Segoe UI', 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--body-bg);
+            color: var(--dark);
             line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
+        .app-container {
+            max-width: 100%;
             margin: 0 auto;
-            background: rgba(25, 25, 45, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 15px 40px;
         }
 
-        header {
+        /* الهيدر */
+        .header {
             text-align: center;
             margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #00b4d8;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.25);
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            color: #00b4d8;
-            font-size: 32px;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Z"/></svg>');
+            background-size: cover;
+        }
+
+        .header h1 {
+            font-size: 28px;
             margin-bottom: 10px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
         }
 
-        .subtitle {
-            color: #90e0ef;
-            font-size: 18px;
+        .header p {
+            font-size: 16px;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .converter-box {
-            background: rgba(30, 30, 50, 0.8);
-            border-radius: 15px;
-            padding: 25px;
+        /* كارد الإدخال */
+        .input-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
             margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 20px var(--shadow);
+            border: 1px solid var(--border);
         }
 
-        .input-group {
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .card-title i {
+            font-size: 22px;
+        }
+
+        /* نموذج الإدخال */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 500;
+            background: #fafbff;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+            background: white;
+        }
+
+        .select-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 25px;
         }
 
-        @media (max-width: 768px) {
-            .input-group {
+        @media (max-width: 576px) {
+            .select-group {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .select-wrapper {
+            position: relative;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #90e0ef;
-            font-weight: 500;
-            font-size: 17px;
+        .select-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 18px;
+            z-index: 2;
         }
 
-        input, select {
+        .form-select {
             width: 100%;
-            padding: 14px 18px;
-            background: rgba(20, 20, 35, 0.9);
-            border: 2px solid #2a2a4a;
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 16px;
-            font-family: 'Tajawal', sans-serif;
+            padding: 18px 20px 18px 50px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 500;
+            background: #fafbff;
+            color: var(--dark);
+            cursor: pointer;
+            appearance: none;
+            font-family: inherit;
             transition: all 0.3s;
         }
 
-        input:focus, select:focus {
+        .form-select:focus {
             outline: none;
-            border-color: #00b4d8;
-            box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+            background: white;
         }
 
-        input::placeholder {
-            color: #7a7a9e;
-        }
-
+        /* زر التحويل */
         .convert-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             width: 100%;
-            background: linear-gradient(90deg, #00b4d8, #0077b6);
+            padding: 22px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             border: none;
-            padding: 18px;
+            border-radius: 16px;
             font-size: 20px;
             font-weight: 700;
-            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
-            font-family: 'Tajawal', sans-serif;
-            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+            font-family: inherit;
         }
 
-        .convert-btn:hover {
-            background: linear-gradient(90deg, #0096c7, #005f8a);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
+        .convert-btn:hover, .convert-btn:active {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(67, 97, 238, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
         }
 
-        .result-container {
-            background: rgba(20, 20, 35, 0.9);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .convert-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* كارد النتيجة */
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px var(--shadow);
+            border: 1px solid var(--border);
+            display: none;
             animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .result-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            justify-content: space-between;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
         }
 
         .result-title {
-            color: #00b4d8;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .conversion-label {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* النتيجة النهائية */
         .final-result {
-            background: rgba(10, 10, 25, 0.9);
-            padding: 25px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(114, 9, 183, 0.05) 100%);
+            border-radius: 16px;
+            padding: 30px 25px;
             text-align: center;
-            margin-bottom: 30px;
-            border: 2px solid rgba(0, 180, 216, 0.3);
-            word-break: break-all;
-            overflow-wrap: break-word;
-        }
-
-        .result-value {
-            color: #4dffea;
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(77, 255, 234, 0.3);
-            line-height: 1.3;
+            margin: 25px 0;
+            border: 2px dashed rgba(67, 97, 238, 0.2);
         }
 
         .result-label {
-            color: #90e0ef;
             font-size: 18px;
-            margin-bottom: 10px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
-        .steps-container {
-            background: rgba(15, 15, 30, 0.9);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
+        .result-value {
+            font-size: 46px;
+            font-weight: 800;
+            color: var(--primary);
+            word-break: break-all;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(67, 97, 238, 0.2);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 576px) {
+            .result-value {
+                font-size: 36px;
+            }
+        }
+
+        /* خطوات التحويل */
+        .steps-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 8px 20px var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
         }
 
         .steps-title {
-            color: #90e0ef;
             font-size: 20px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .step-item {
-            background: rgba(25, 25, 45, 0.9);
-            border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-right: 4px solid #00b4d8;
+            background: #fafbff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-right: 5px solid var(--primary);
             transition: all 0.3s;
+            border: 1px solid var(--border);
         }
 
         .step-item:hover {
             transform: translateX(-5px);
-            background: rgba(30, 30, 55, 0.9);
+            box-shadow: 0 6px 15px var(--shadow-hover);
         }
 
-        .step-number {
-            display: inline-block;
-            background: #00b4d8;
-            color: #000;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 32px;
-            font-weight: 700;
-            margin-left: 10px;
-            font-size: 16px;
-        }
-
-        .step-content {
-            display: inline-block;
-            width: calc(100% - 50px);
-            vertical-align: middle;
-            font-size: 17px;
-        }
-
-        .division-display {
-            background: rgba(40, 40, 70, 0.7);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-family: monospace;
-            font-size: 18px;
-        }
-
-        .hex-box {
-            display: inline-flex;
+        .step-header {
+            display: flex;
             align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: #00b4d8;
-            color: #000;
-            font-weight: 700;
-            font-size: 20px;
-            border-radius: 8px;
-            margin: 0 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .arrow {
-            color: #ff7b4d;
-            font-size: 24px;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        .example-section {
-            background: rgba(30, 30, 50, 0.7);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .example-title {
-            color: #90e0ef;
-            font-size: 20px;
+            gap: 12px;
             margin-bottom: 15px;
         }
 
-        .example-item {
-            background: rgba(40, 40, 65, 0.7);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid #ff7b4d;
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
         }
 
-        footer {
+        .step-title {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 18px;
+        }
+
+        .step-content {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 17px;
+            line-height: 1.7;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .division-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .division-box {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+            border: 2px solid rgba(67, 97, 238, 0.2);
+            font-size: 18px;
+        }
+
+        .division-operator {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            min-width: 80px;
+            text-align: center;
+            font-size: 20px;
+            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .result-arrow {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* أمثلة */
+        .examples-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 8px 20px var(--shadow);
+            border: 1px solid var(--border);
+            margin-top: 25px;
+        }
+
+        .examples-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 576px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .example-btn {
+            background: #fafbff;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .example-btn:hover, .example-btn:active {
+            background: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(67, 97, 238, 0.15);
+        }
+
+        .example-result {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* الفوتر */
+        .footer {
             text-align: center;
             margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #7a7a9e;
-            font-size: 14px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+            color: var(--gray);
+            font-size: 15px;
         }
 
+        /* رسائل الخطأ */
         .error-message {
-            background: rgba(255, 87, 87, 0.1);
-            border: 1px solid #ff5757;
-            color: #ff8a8a;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+            background: rgba(230, 57, 70, 0.1);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
             text-align: center;
+            font-weight: 600;
+            font-size: 17px;
+            display: none;
         }
 
-        .success-message {
-            background: rgba(87, 255, 137, 0.1);
-            border: 1px solid #57ff89;
-            color: #8affaa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .app-container {
+                padding: 15px 12px 30px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+                border-radius: 18px;
+                margin-bottom: 25px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 15px;
+            }
+            
+            .input-card, .result-card, .steps-card, .examples-card {
+                padding: 20px 18px;
+                border-radius: 18px;
+                margin-bottom: 20px;
+            }
+            
+            .card-title, .steps-title, .examples-title, .result-title {
+                font-size: 19px;
+                margin-bottom: 20px;
+            }
+            
+            .form-input, .form-select {
+                padding: 16px 18px;
+                font-size: 17px;
+            }
+            
+            .form-select {
+                padding-left: 48px;
+            }
+            
+            .convert-btn {
+                padding: 20px;
+                font-size: 19px;
+            }
+            
+            .result-value {
+                font-size: 38px;
+            }
+            
+            .step-item {
+                padding: 18px;
+            }
+            
+            .step-content {
+                padding: 16px;
+                font-size: 16px;
+            }
+            
+            .division-box, .result-box {
+                min-width: 70px;
+                padding: 14px;
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .result-value {
+                font-size: 32px;
+            }
+            
+            .division-box, .result-box {
+                min-width: 65px;
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .result-box {
+                font-size: 18px;
+            }
+            
+            .conversion-label {
+                font-size: 15px;
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔄 محول الأنظمة العددية المتقدم</h1>
-            <p class="subtitle">تحويل بين الأنظمة العشرية، الثنائية، الثمانية، والست عشرية مع شرح مفصل</p>
-        </header>
-
-        <div class="converter-box">
-            <div class="input-group">
-                <div class="form-group">
-                    <label for="inputNumber">🔢 الرقم المدخل</label>
-                    <input type="text" id="inputNumber" placeholder="أدخل الرقم هنا (مثال: 2026)" value="2026">
-                </div>
-                
-                <div class="form-group">
-                    <label for="inputBase">📥 النظام الأصلي</label>
-                    <select id="inputBase">
-                        <option value="10">عشري (Decimal)</option>
-                        <option value="2">ثنائي (Binary)</option>
-                        <option value="8">ثماني (Octal)</option>
-                        <option value="16">ست عشري (Hexadecimal)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <div class="form-group">
-                    <label for="outputBase">📤 النظام المطلوب</label>
-                    <select id="outputBase">
-                        <option value="2">ثنائي (Binary)</option>
-                        <option value="8">ثماني (Octal)</option>
-                        <option value="10">عشري (Decimal)</option>
-                        <option value="16" selected>ست عشري (Hexadecimal)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label style="visibility: hidden;">تحويل</label>
-                    <button class="convert-btn" onclick="convert()">🚀 بدء التحويل</button>
-                </div>
-            </div>
+    <div class="app-container">
+        <!-- الهيدر -->
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> محول الأنظمة العددية</h1>
+            <p>تحويل بين الأنظمة العشرية، الثنائية، الثمانية، والست عشرية بسهولة</p>
         </div>
 
-        <div id="resultContainer" class="result-container" style="display: none;">
+        <!-- رسالة الخطأ -->
+        <div id="errorMessage" class="error-message"></div>
+
+        <!-- كارد الإدخال -->
+        <div class="input-card">
+            <div class="card-title">
+                <i class="fas fa-keyboard"></i> إدخال البيانات
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-hashtag"></i> الرقم المراد تحويله
+                </label>
+                <input type="text" id="inputNumber" class="form-input" placeholder="أدخل الرقم هنا (مثال: 2026)" value="2026">
+            </div>
+            
+            <div class="select-group">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-sign-in-alt"></i> النظام الأصلي
+                    </label>
+                    <div class="select-wrapper">
+                        <i class="fas fa-code-branch"></i>
+                        <select id="inputBase" class="form-select">
+                            <option value="10">عشري (Decimal)</option>
+                            <option value="2">ثنائي (Binary)</option>
+                            <option value="8">ثماني (Octal)</option>
+                            <option value="16">سداسي عشر (Hexadecimal)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-sign-out-alt"></i> النظام المطلوب
+                    </label>
+                    <div class="select-wrapper">
+                        <i class="fas fa-exchange-alt"></i>
+                        <select id="outputBase" class="form-select">
+                            <option value="2">ثنائي (Binary)</option>
+                            <option value="8">ثماني (Octal)</option>
+                            <option value="10">عشري (Decimal)</option>
+                            <option value="16" selected>سداسي عشر (Hexadecimal)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="convert-btn" onclick="convert()">
+                <i class="fas fa-sync-alt"></i> تحويل الآن
+            </button>
+        </div>
+
+        <!-- كارد النتيجة -->
+        <div id="resultCard" class="result-card">
             <div class="result-header">
-                <h2 class="result-title">📊 نتيجة التحويل</h2>
-                <div class="result-label" id="conversionLabel"></div>
+                <div class="result-title">
+                    <i class="fas fa-chart-line"></i> نتيجة التحويل
+                </div>
+                <div id="conversionLabel" class="conversion-label">
+                    <i class="fas fa-arrow-right"></i> <span>عشري ← سداسي عشر</span>
+                </div>
             </div>
-
+            
             <div class="final-result">
-                <div id="resultValue" class="result-value"></div>
-            </div>
-
-            <div id="stepsContainer" class="steps-container">
-                <!-- سيتم إضافة خطوات التحويل هنا -->
+                <div class="result-label">الرقم بعد التحويل:</div>
+                <div id="resultValue" class="result-value">7EA</div>
             </div>
         </div>
 
-        <div class="example-section">
-            <h3 class="example-title">💡 أمثلة سريعة</h3>
-            <div class="example-item" onclick="setExample('10', '16', '2026')">
-                <strong>2026 (عشري) → سداسي عشر = 7EA</strong>
+        <!-- كارد خطوات التحويل -->
+        <div id="stepsCard" class="steps-card" style="display: none;">
+            <div class="steps-title">
+                <i class="fas fa-list-ol"></i> خطوات التحويل
             </div>
-            <div class="example-item" onclick="setExample('2', '10', '1101')">
-                <strong>1101 (ثنائي) → عشري = 13</strong>
+            <div id="stepsContainer"></div>
+        </div>
+
+        <!-- كارد الأمثلة -->
+        <div class="examples-card">
+            <div class="examples-title">
+                <i class="fas fa-lightbulb"></i> أمثلة سريعة
             </div>
-            <div class="example-item" onclick="setExample('16', '2', 'A5')">
-                <strong>A5 (سداسي عشر) → ثنائي = 10100101</strong>
-            </div>
-            <div class="example-item" onclick="setExample('10', '2', '42')">
-                <strong>42 (عشري) → ثنائي = 101010</strong>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setExample('10', '16', '2026')">
+                    <span>2026 (عشري) ← سداسي عشر</span>
+                    <span class="example-result">7EA</span>
+                </div>
+                <div class="example-btn" onclick="setExample('2', '10', '1101')">
+                    <span>1101 (ثنائي) ← عشري</span>
+                    <span class="example-result">13</span>
+                </div>
+                <div class="example-btn" onclick="setExample('10', '2', '42')">
+                    <span>42 (عشري) ← ثنائي</span>
+                    <span class="example-result">101010</span>
+                </div>
+                <div class="example-btn" onclick="setExample('16', '2', 'A5')">
+                    <span>A5 (سداسي عشر) ← ثنائي</span>
+                    <span class="example-result">10100101</span>
+                </div>
             </div>
         </div>
 
-        <footer>
-            <p>تم التطوير باستخدام HTML, CSS و JavaScript | جميع الحقوق محفوظة © 2024</p>
-        </footer>
+        <!-- الفوتر -->
+        <div class="footer">
+            <p>محول الأنظمة العددية المتقدم © 2024 | تم التطوير بلغات الويب</p>
+        </div>
     </div>
 
     <script>
@@ -405,29 +739,71 @@
             convert();
         }
 
+        // إظهار رسالة خطأ
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // التحقق من صحة الرقم
+        function isValidNumber(numStr, base) {
+            const validChars = {
+                2: /^[01]+$/,
+                8: /^[0-7]+$/,
+                10: /^[0-9]+$/,
+                16: /^[0-9A-Fa-f]+$/
+            };
+            const regex = validChars[base];
+            return regex ? regex.test(numStr.toUpperCase()) : false;
+        }
+
+        // الحصول على اسم النظام
+        function getBaseName(base) {
+            const names = {2: 'ثنائي', 8: 'ثماني', 10: 'عشري', 16: 'سداسي عشر'};
+            return names[base] || `أساس ${base}`;
+        }
+
+        // التحويل من عشري إلى أي نظام
+        function decimalToBase(decimal, base) {
+            if (decimal === 0) return '0';
+            let result = '';
+            let num = decimal;
+            while (num > 0) {
+                let remainder = num % base;
+                result = (remainder < 10 ? remainder : String.fromCharCode(65 + (remainder - 10))) + result;
+                num = Math.floor(num / base);
+            }
+            return result;
+        }
+
         // دالة التحويل الرئيسية
         function convert() {
             const numStr = document.getElementById('inputNumber').value.trim();
             const inputBase = parseInt(document.getElementById('inputBase').value);
             const outputBase = parseInt(document.getElementById('outputBase').value);
-            const resultContainer = document.getElementById('resultContainer');
-            const resultValue = document.getElementById('resultValue');
-            const stepsContainer = document.getElementById('stepsContainer');
-            const conversionLabel = document.getElementById('conversionLabel');
+            const resultCard = document.getElementById('resultCard');
+            const stepsCard = document.getElementById('stepsCard');
+            const errorDiv = document.getElementById('errorMessage');
 
-            // التحقق من إدخال الرقم
+            // إخفاء رسالة الخطأ
+            errorDiv.style.display = 'none';
+
+            // التحقق من الإدخال
             if (!numStr) {
                 showError('الرجاء إدخال رقم للتحويل');
                 return;
             }
 
-            // التحقق من صحة الرقم للنظام المختار
             if (!isValidNumber(numStr, inputBase)) {
                 showError(`الرقم "${numStr}" غير صالح للنظام ${getBaseName(inputBase)}`);
                 return;
             }
 
-            // تحويل الرقم إلى عشري أولاً
+            // التحويل إلى عشري
             let decimalValue;
             try {
                 decimalValue = parseInt(numStr, inputBase);
@@ -439,200 +815,181 @@
 
             // التحويل إلى النظام المطلوب
             let result;
-            let steps = [];
+            if (outputBase === 10) {
+                result = decimalValue.toString();
+            } else {
+                result = decimalToBase(decimalValue, outputBase);
+            }
+
+            // تحديث النتيجة
+            document.getElementById('resultValue').textContent = result;
+            document.getElementById('conversionLabel').innerHTML = 
+                `<i class="fas fa-arrow-right"></i> <span>${getBaseName(inputBase)} ← ${getBaseName(outputBase)}</span>`;
+            
+            // إظهار كارد النتيجة
+            resultCard.style.display = 'block';
+            
+            // إنشاء وعرض خطوات التحويل
+            generateSteps(numStr, inputBase, outputBase, decimalValue, result);
+            stepsCard.style.display = 'block';
+            
+            // التمرير إلى النتيجة
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // إنشاء خطوات التحويل
+        function generateSteps(numStr, inputBase, outputBase, decimalValue, result) {
+            const stepsContainer = document.getElementById('stepsContainer');
+            let stepsHTML = '';
             
             if (outputBase === 10) {
-                // التحويل إلى النظام العشري
-                result = decimalValue.toString();
-                steps = generateDecimalSteps(numStr, inputBase, decimalValue);
-            } else {
-                // التحويل إلى أنظمة أخرى
-                result = decimalToBase(decimalValue, outputBase);
-                steps = generateConversionSteps(decimalValue, outputBase, result);
-            }
-
-            // تحديث واجهة المستخدم
-            conversionLabel.textContent = `${getBaseName(inputBase)} → ${getBaseName(outputBase)}`;
-            resultValue.textContent = result;
-            stepsContainer.innerHTML = steps;
-            resultContainer.style.display = 'block';
-
-            // التمرير إلى النتيجة
-            resultContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // التحقق من صحة الرقم للنظام المختار
-        function isValidNumber(numStr, base) {
-            const validChars = {
-                2: /^[01]+$/,
-                8: /^[0-7]+$/,
-                10: /^[0-9]+$/,
-                16: /^[0-9A-Fa-f]+$/
-            };
-            
-            const regex = validChars[base];
-            return regex ? regex.test(numStr) : false;
-        }
-
-        // الحصول على اسم النظام
-        function getBaseName(base) {
-            const names = {
-                2: 'ثنائي',
-                8: 'ثماني',
-                10: 'عشري',
-                16: 'سداسي عشر'
-            };
-            return names[base] || `أساس ${base}`;
-        }
-
-        // التحويل من عشري إلى أي نظام
-        function decimalToBase(decimal, base) {
-            if (decimal === 0) return '0';
-            
-            let result = '';
-            let num = decimal;
-            
-            while (num > 0) {
-                let remainder = num % base;
-                if (remainder < 10) {
-                    result = remainder + result;
-                } else {
-                    result = String.fromCharCode(65 + (remainder - 10)) + result;
-                }
-                num = Math.floor(num / base);
-            }
-            
-            return result;
-        }
-
-        // إنشاء خطوات التحويل إلى النظام العشري
-        function generateDecimalSteps(numStr, inputBase, decimalValue) {
-            const steps = [];
-            steps.push(`<h3 class="steps-title">📝 خطوات التحويل من ${getBaseName(inputBase)} إلى عشري</h3>`);
-            
-            // تحويل الأحرف إلى أرقام
-            const digits = numStr.toUpperCase().split('').reverse();
-            let stepHtml = '';
-            
-            digits.forEach((digit, index) => {
-                let digitValue;
-                if (digit >= 'A' && digit <= 'F') {
-                    digitValue = digit.charCodeAt(0) - 55; // A=10, B=11, إلخ
-                } else {
-                    digitValue = parseInt(digit);
-                }
+                // خطوات التحويل إلى عشري
+                const digits = numStr.toUpperCase().split('').reverse();
+                let stepIndex = 1;
                 
-                const power = Math.pow(inputBase, index);
-                const product = digitValue * power;
-                
-                stepHtml += `
+                stepsHTML += `
                     <div class="step-item">
-                        <span class="step-number">${index + 1}</span>
-                        <span class="step-content">
-                            الرقم ${digit} في المكان ${index}:<br>
-                            <div class="division-display">
-                                ${digit} × ${inputBase}<sup>${index}</sup> = ${digitValue} × ${power} = <strong>${product}</strong>
+                        <div class="step-header">
+                            <div class="step-number">${stepIndex++}</div>
+                            <div class="step-title">تحويل الرقم ${numStr} من ${getBaseName(inputBase)} إلى عشري</div>
+                        </div>
+                        <div class="step-content">
+                            <p>نقوم بتحليل الرقم حسب القوى:</p>
+                            <div style="text-align: center; margin: 15px 0;">
+                                <div style="font-size: 18px; font-weight: 600; color: var(--primary);">
+                                    ${numStr}<sub>${inputBase}</sub> = 
+                                    ${digits.map((d, i) => {
+                                        let val = (d >= 'A' && d <= 'F') ? d.charCodeAt(0) - 55 : parseInt(d);
+                                        return `${val} × ${inputBase}<sup>${i}</sup>`;
+                                    }).reverse().join(' + ')}
+                                </div>
                             </div>
-                        </span>
+                        </div>
                     </div>
                 `;
-            });
-            
-            // إضافة الخطوة النهائية
-            stepHtml += `
-                <div class="step-item" style="background: rgba(0, 180, 216, 0.15);">
-                    <span class="step-number">✓</span>
-                    <span class="step-content">
-                        <strong>المجموع النهائي:</strong><br>
-                        <div class="division-display" style="background: rgba(0, 180, 216, 0.2);">
+                
+                // خطوات الحساب
+                stepsHTML += `
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">${stepIndex++}</div>
+                            <div class="step-title">حساب القيم</div>
+                        </div>
+                        <div class="step-content">
                             ${digits.map((d, i) => {
                                 let val = (d >= 'A' && d <= 'F') ? d.charCodeAt(0) - 55 : parseInt(d);
-                                return `${val} × ${inputBase}<sup>${i}</sup>`;
-                            }).join(' + ')} = <strong>${decimalValue}</strong>
+                                let power = Math.pow(inputBase, i);
+                                return `<div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                    ${d} × ${inputBase}<sup>${i}</sup> = ${val} × ${power} = <strong>${val * power}</strong>
+                                </div>`;
+                            }).reverse().join('')}
                         </div>
-                    </span>
-                </div>
-            `;
-            
-            return stepHtml;
-        }
-
-        // إنشاء خطوات التحويل من عشري إلى أنظمة أخرى
-        function generateConversionSteps(decimalValue, outputBase, result) {
-            const steps = [];
-            steps.push(`<h3 class="steps-title">📝 خطوات التحويل من عشري إلى ${getBaseName(outputBase)}</h3>`);
-            
-            let stepHtml = '';
-            let num = decimalValue;
-            let stepCount = 1;
-            const remainders = [];
-            
-            while (num > 0) {
-                const quotient = Math.floor(num / outputBase);
-                const remainder = num % outputBase;
-                const remainderChar = remainder < 10 ? remainder : String.fromCharCode(65 + (remainder - 10));
-                
-                remainders.push({
-                    value: remainder,
-                    char: remainderChar,
-                    dividend: num
-                });
-                
-                stepHtml += `
-                    <div class="step-item">
-                        <span class="step-number">${stepCount}</span>
-                        <span class="step-content">
-                            <strong>${num} ÷ ${outputBase}</strong><br>
-                            <div class="division-display">
-                                الناتج: ${quotient} | الباقي: ${remainder}
-                                ${remainder >= 10 ? ` → ${remainderChar}` : ''}
-                            </div>
-                        </span>
                     </div>
                 `;
                 
-                num = quotient;
-                stepCount++;
-            }
-            
-            // إضافة الخطوة النهائية لقراءة البواقي
-            if (remainders.length > 0) {
-                let hexDisplay = '';
-                for (let i = remainders.length - 1; i >= 0; i--) {
-                    hexDisplay += `<span class="hex-box">${remainders[i].char}</span>`;
-                    if (i > 0) hexDisplay += '<span class="arrow">←</span>';
+                // الخطوة النهائية
+                stepsHTML += `
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">${stepIndex}</div>
+                            <div class="step-title">الجمع النهائي</div>
+                        </div>
+                        <div class="step-content">
+                            <p>نجمع جميع القيم المحسوبة:</p>
+                            <div class="result-row">
+                                ${digits.map((d, i) => {
+                                    let val = (d >= 'A' && d <= 'F') ? d.charCodeAt(0) - 55 : parseInt(d);
+                                    return `<div class="result-box">${val * Math.pow(inputBase, i)}</div>`;
+                                }).reverse().join('<div class="result-arrow">+</div>')}
+                                <div class="result-arrow">=</div>
+                                <div class="result-box" style="background: var(--success);">${decimalValue}</div>
+                            </div>
+                            <p style="margin-top: 20px; text-align: center; font-weight: 700; color: var(--success);">
+                                النتيجة: ${decimalValue}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+            } else {
+                // خطوات التحويل من عشري إلى أنظمة أخرى
+                let stepIndex = 1;
+                let num = decimalValue;
+                const divisions = [];
+                
+                stepsHTML += `
+                    <div class="step-item">
+                        <div class="step-header">
+                            <div class="step-number">${stepIndex++}</div>
+                            <div class="step-title">تحويل الرقم ${decimalValue} من عشري إلى ${getBaseName(outputBase)}</div>
+                        </div>
+                        <div class="step-content">
+                            <p>نقوم بعملية القسمة المتكررة على ${outputBase} (أساس النظام ${getBaseName(outputBase)})</p>
+                        </div>
+                    </div>
+                `;
+                
+                // خطوات القسمة
+                while (num > 0) {
+                    const quotient = Math.floor(num / outputBase);
+                    const remainder = num % outputBase;
+                    const remainderChar = remainder < 10 ? remainder : String.fromCharCode(65 + (remainder - 10));
+                    
+                    divisions.push({
+                        dividend: num,
+                        quotient: quotient,
+                        remainder: remainder,
+                        remainderChar: remainderChar
+                    });
+                    
+                    stepsHTML += `
+                        <div class="step-item">
+                            <div class="step-header">
+                                <div class="step-number">${stepIndex++}</div>
+                                <div class="step-title">خطوة القسمة ${divisions.length}</div>
+                            </div>
+                            <div class="step-content">
+                                <div class="division-row">
+                                    <div class="division-box">${num}</div>
+                                    <div class="division-operator">÷</div>
+                                    <div class="division-box">${outputBase}</div>
+                                    <div class="division-operator">=</div>
+                                    <div class="division-box">${quotient}</div>
+                                </div>
+                                <div style="text-align: center; margin: 15px 0; font-weight: 600;">
+                                    الباقي: <span style="color: var(--primary); font-size: 20px;">${remainder}</span>
+                                    ${remainder >= 10 ? ` → <span style="color: var(--secondary); font-size: 20px;">${remainderChar}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    num = quotient;
                 }
                 
-                stepHtml += `
-                    <div class="step-item" style="background: rgba(0, 180, 216, 0.15);">
-                        <span class="step-number">✓</span>
-                        <span class="step-content">
-                            <strong>قراءة البواقي من الأسفل إلى الأعلى:</strong><br><br>
-                            <div style="text-align: center; margin: 15px 0;">
-                                ${hexDisplay}
+                // عرض النتيجة النهائية
+                if (divisions.length > 0) {
+                    stepsHTML += `
+                        <div class="step-item">
+                            <div class="step-header">
+                                <div class="step-number">${stepIndex}</div>
+                                <div class="step-title">النتيجة النهائية</div>
                             </div>
-                            <div class="division-display" style="background: rgba(0, 180, 216, 0.2);">
-                                النتيجة النهائية: <strong>${result}</strong>
+                            <div class="step-content">
+                                <p>نقرأ البواقي من الأسفل إلى الأعلى:</p>
+                                <div class="result-row">
+                                    ${divisions.map(d => `<div class="result-box">${d.remainderChar}</div>`).reverse().join('<div class="result-arrow">←</div>')}
+                                </div>
+                                <p style="margin-top: 20px; text-align: center; font-weight: 700; color: var(--success); font-size: 22px;">
+                                    النتيجة: ${result}
+                                </p>
                             </div>
-                        </span>
-                    </div>
-                `;
+                        </div>
+                    `;
+                }
             }
             
-            return stepHtml;
-        }
-
-        // عرض رسالة خطأ
-        function showError(message) {
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.style.display = 'block';
-            resultContainer.innerHTML = `
-                <div class="error-message">
-                    <h3>⚠️ خطأ</h3>
-                    <p>${message}</p>
-                </div>
-            `;
-            resultContainer.scrollIntoView({ behavior: 'smooth' });
+            stepsContainer.innerHTML = stepsHTML;
         }
 
         // تحويل تلقائي عند تحميل الصفحة
